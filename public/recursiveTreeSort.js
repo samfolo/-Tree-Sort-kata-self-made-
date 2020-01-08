@@ -1,52 +1,13 @@
 // create a function which can sort the following objects:
 
-let objA = {
-  tier: 1,
-  value: 'A',
-  children: [],
-}
-
-let objB = {
-  tier: 2,
-  value: 'A',
-  children: [],
-}
-
-let objC = {
-  tier: 3,
-  value: 'B',
-  children: [],
-}
-
-let objD = {
-  tier: 2,
-  value: 'B',
-  children: [],
-}
-
-let objE = {
-  tier: 3,
-  value: 'A',
-  children: [],
-}
-
-let objF = {
-  tier: 4,
-  value: 'A',
-  children: [],
-}
-
-let objG = {
-  tier: 2,
-  value: 'A',
-  children: [],
-}
-
-let objH = {
-  tier: 3,
-  value: 'B',
-  children: [],
-}
+let objA = { tier: 1, value: 'A', children: [], }
+let objB = { tier: 2, value: 'A', children: [], }
+let objC = { tier: 3, value: 'B', children: [], }
+let objD = { tier: 2, value: 'B', children: [], }
+let objE = { tier: 3, value: 'A', children: [], }
+let objF = { tier: 4, value: 'A', children: [], }
+let objG = { tier: 2, value: 'A', children: [], }
+let objH = { tier: 3, value: 'B', children: [], }
 
 // like this:
 
@@ -99,8 +60,35 @@ let exampleSort = [
 // the same tier and value, in which case pass it to the next available candidate.
 
 // - if two objects are candidates for childhood and there are not enough parents, they can belong to the same parent
+const without = (el, arr) => {
+  const target = arr.filter(e => e === el)[0];
+  const elIndex = arr.indexOf(target);
+  return [
+    ...arr.slice(0, elIndex),
+    ...arr.slice(elIndex + 1, arr.length),
+  ];
+}
+
+
 
 const treeSort = objArr => {
-  objArr[0].children.push(objArr[1]);
-  return objArr[0]
+  let resArr = [...objArr];
+
+  for (let i = 0; i < resArr.length; i++) {
+    let exResArr = without(resArr[i], resArr);
+
+    for (let j = 0; j < exResArr.length; j++) {
+      if (resArr[i].tier < exResArr[j].tier && !resArr[i].children.includes(exResArr[j].tier)) {
+        resArr[i].children.push(exResArr[j])
+        resArr = without(exResArr[j], resArr);
+      }
+    }
+  }
+
+  // resArr.forEach(i => {
+  //   console.log(i)
+  //   console.log(`children:::: `, i.children)
+  // })
+  console.log(resArr)
+  return resArr;
 };
