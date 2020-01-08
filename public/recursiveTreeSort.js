@@ -69,6 +69,10 @@ const without = (el, arr) => {
   ];
 }
 
+const kinObjects = (objectA, objectB) => {
+  return objectA.value === objectB.value;
+}
+
 
 
 const treeSort = objArr => {
@@ -78,17 +82,13 @@ const treeSort = objArr => {
     let exResArr = without(resArr[i], resArr);
 
     for (let j = 0; j < exResArr.length; j++) {
-      if (resArr[i].tier < exResArr[j].tier && !resArr[i].children.includes(exResArr[j].tier)) {
+      if (resArr[i].tier < exResArr[j].tier && !resArr[i].children.includes(exResArr[j].tier) && kinObjects(resArr[i], exResArr[j])) {
         resArr[i].children.push(exResArr[j])
         resArr = without(exResArr[j], resArr);
       }
     }
   }
 
-  // resArr.forEach(i => {
-  //   console.log(i)
-  //   console.log(`children:::: `, i.children)
-  // })
   console.log(resArr)
   return resArr;
 };

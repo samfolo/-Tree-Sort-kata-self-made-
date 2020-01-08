@@ -20,4 +20,16 @@ describe('treeSort', () => {
 
     expect(treeSort([testObjA, testObjB, testObjC])).toResemble(testObjResult);
   });
+
+  it('can sort two differently valued lower tier objects and one parent object', () => {
+    let testObjA = { tier: 2, value: 'G', children: [], }
+    let testObjB = { tier: 3, value: 'G', children: [], }
+    let testObjC = { tier: 3, value: 'R', children: [], }
+    let testObjResult = [
+      { tier: 2, value: 'G', children: [ { tier: 3, value: 'G', children: [], }, ], },
+      { tier: 2, value: 'R', children: [], },
+    ]
+
+    expect(treeSort([testObjA, testObjB, testObjC])).toResemble(testObjResult);
+  });
 });
