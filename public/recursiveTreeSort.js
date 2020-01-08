@@ -89,6 +89,9 @@ const treeSort = objArr => {
         ) {
         resArr[i].children.push(exResArr[j])
         resArr = without(exResArr[j], resArr);
+        for (let k = 0; k < resArr[i].children.length; k++) {
+          treeSort(resArr[i].children);
+        }
       }
     }
   }

@@ -45,4 +45,21 @@ describe('treeSort', () => {
 
     expect(treeSort([testObjA, testObjB, testObjC, testObjD])).toResemble(testObjResult);
   });
+
+  it('can sort two differently valued 3-tier objects, one 2-tier object and one similarly valued 1-tier object [1]', () => {
+    let testObjA = { tier: 1, value: 'Y', children: [], }
+    let testObjB = { tier: 2, value: 'Y', children: [], }
+    let testObjC = { tier: 3, value: 'Y', children: [], }
+    let testObjD = { tier: 3, value: 'R', children: [], }
+    let testObjResult = [
+      { tier: 1, value: 'Y', children: [ 
+        { tier: 2, value: 'Y', children: [
+          { tier: 3, value: 'Y', children: [], },
+        ], },
+      ], },
+      { tier: 3, value: 'R', children: [], },
+    ]
+
+    expect(treeSort([testObjA, testObjB, testObjC, testObjD])).toResemble(testObjResult);
+  });
 });
